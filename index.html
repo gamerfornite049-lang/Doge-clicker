@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doge Miner - Click to Mine Doges!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🐕 DOGE MINER 🐕</h1>
+            <p class="subtitle">Click to mine Doges and become rich!</p>
+        </header>
+
+        <!-- Main Game Area -->
+        <div class="game-wrapper">
+            <!-- Doge Display -->
+            <div class="doge-section">
+                <div class="doge-container" id="dogeContainer">
+                    <div class="doge" id="dogeButton">🐕</div>
+                    <div class="doge-name">Much Doge. Very Coin.</div>
+                </div>
+                <div class="click-effect" id="clickEffect"></div>
+            </div>
+
+            <!-- Stats Panel -->
+            <div class="stats-panel">
+                <div class="stat">
+                    <span class="stat-label">Total Doges:</span>
+                    <span class="stat-value" id="totalDoges">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Doges/Second:</span>
+                    <span class="stat-value" id="dogesPerSecond">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total Clicks:</span>
+                    <span class="stat-value" id="totalClicks">0</span>
+                </div>
+            </div>
+
+            <!-- Game Grid -->
+            <div class="game-grid">
+                <!-- Upgrades Section -->
+                <div class="upgrades-section">
+                    <h2>🎁 Upgrades</h2>
+                    <div class="upgrades-list" id="upgradesList"></div>
+                </div>
+
+                <!-- Buildings Section -->
+                <div class="buildings-section">
+                    <h2>🏗️ Buildings & Miners</h2>
+                    <div class="buildings-list" id="buildingsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <button id="saveBtn" class="footer-btn">💾 Save Game</button>
+            <button id="loadBtn" class="footer-btn">📂 Load Game</button>
+            <button id="resetBtn" class="footer-btn">🔄 Reset</button>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
