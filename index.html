@@ -3,68 +3,603 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doge Miner - Click to Mine Doges!</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>🐕 DOGE MINER - Click to Get Rich!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #FFE5B4 0%, #FFDAB9 100%);
+            border-radius: 15px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #888;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .clicker-section {
+            text-align: center;
+        }
+
+        .doge-button {
+            width: 150px;
+            height: 150px;
+            font-size: 80px;
+            border: none;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #FFE5B4, #FFD700, #FFA500);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+            transition: all 0.1s ease;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .doge-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 165, 0, 0.6);
+        }
+
+        .doge-button:active {
+            transform: scale(0.95);
+        }
+
+        .click-text {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .floating-number {
+            position: fixed;
+            font-weight: bold;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: float-up 1s ease-out forwards;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid #FFE5B4;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #FFD700;
+            border-bottom-color: #FFD700;
+        }
+
+        .tab-content {
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .item {
+            background: linear-gradient(135deg, #FFFACD 0%, #F0E68C 100%);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .item-details {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .item-cost {
+            background: #FFD700;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+
+        .buy-btn {
+            background: #FFD700;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85em;
+        }
+
+        .buy-btn:hover:not(:disabled) {
+            background: #FFA500;
+            transform: scale(1.05);
+        }
+
+        .buy-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .footer-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .footer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+        }
+
+        .level-badge {
+            background: #FFA500;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                border-radius: 15px;
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .doge-button {
+                width: 120px;
+                height: 120px;
+                font-size: 60px;
+            }
+
+            .stats-box {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .stat {
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="game-container">
         <!-- Header -->
-        <header class="header">
-            <h1>🐕 DOGE MINER 🐕</h1>
-            <p class="subtitle">Click to mine Doges and become rich!</p>
-        </header>
+        <div class="header">
+            <h1>🐕 DOGE MINER</h1>
+            <p>Click the doge to mine coins!</p>
+        </div>
 
-        <!-- Main Game Area -->
-        <div class="game-wrapper">
-            <!-- Doge Display -->
-            <div class="doge-section">
-                <div class="doge-container" id="dogeContainer">
-                    <div class="doge" id="dogeButton">🐕</div>
-                    <div class="doge-name">Much Doge. Very Coin.</div>
-                </div>
-                <div class="click-effect" id="clickEffect"></div>
+        <!-- Stats -->
+        <div class="stats-box">
+            <div class="stat">
+                <div class="stat-label">Total Doges</div>
+                <div class="stat-value" id="totalMoney">0</div>
             </div>
-
-            <!-- Stats Panel -->
-            <div class="stats-panel">
-                <div class="stat">
-                    <span class="stat-label">Total Doges:</span>
-                    <span class="stat-value" id="totalDoges">0</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Doges/Second:</span>
-                    <span class="stat-value" id="dogesPerSecond">0</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Total Clicks:</span>
-                    <span class="stat-value" id="totalClicks">0</span>
-                </div>
+            <div class="stat">
+                <div class="stat-label">Per Second</div>
+                <div class="stat-value" id="perSecond">0</div>
             </div>
-
-            <!-- Game Grid -->
-            <div class="game-grid">
-                <!-- Upgrades Section -->
-                <div class="upgrades-section">
-                    <h2>🎁 Upgrades</h2>
-                    <div class="upgrades-list" id="upgradesList"></div>
-                </div>
-
-                <!-- Buildings Section -->
-                <div class="buildings-section">
-                    <h2>🏗️ Buildings & Miners</h2>
-                    <div class="buildings-list" id="buildingsList"></div>
-                </div>
+            <div class="stat">
+                <div class="stat-label">Per Click</div>
+                <div class="stat-value" id="perClick">1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Total Clicks</div>
+                <div class="stat-value" id="clicks">0</div>
             </div>
         </div>
 
+        <!-- Clicker Section -->
+        <div class="clicker-section">
+            <button class="doge-button" id="dogeBtn">🐕</button>
+            <div class="click-text" id="clickText">Click the doge to start!</div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="upgrades">💪 Upgrades</button>
+            <button class="tab-btn" data-tab="miners">🏗️ Miners</button>
+        </div>
+
+        <!-- Upgrades Tab -->
+        <div class="tab-content active" id="upgrades"></div>
+
+        <!-- Miners Tab -->
+        <div class="tab-content" id="miners"></div>
+
         <!-- Footer -->
-        <footer class="footer">
-            <button id="saveBtn" class="footer-btn">💾 Save Game</button>
-            <button id="loadBtn" class="footer-btn">📂 Load Game</button>
-            <button id="resetBtn" class="footer-btn">🔄 Reset</button>
-        </footer>
+        <div class="footer">
+            <button class="footer-btn" id="saveBtn">💾 Save</button>
+            <button class="footer-btn" id="loadBtn">📂 Load</button>
+            <button class="footer-btn" id="resetBtn">🔄 Reset</button>
+        </div>
     </div>
 
-    <script src="game.js"></script>
+    <script>
+        // Game State
+        let gameState = {
+            money: 0,
+            totalMoney: 0,
+            clickPower: 1,
+            totalClicks: 0,
+            lastTime: Date.now(),
+            upgrades: {},
+            miners: {}
+        };
+
+        // Upgrades
+        const upgrades = [
+            { id: 'power1', name: 'Click Training', level: 1, cost: 10, value: 1 },
+            { id: 'power2', name: 'Super Paws', level: 2, cost: 50, value: 3 },
+            { id: 'power3', name: 'Golden Touch', level: 3, cost: 200, value: 10 },
+            { id: 'power4', name: 'Mega Bite', level: 4, cost: 1000, value: 30 },
+            { id: 'power5', name: 'Ultra Bark', level: 5, cost: 5000, value: 100 }
+        ];
+
+        // Miners
+        const miners = [
+            { id: 'miner1', name: 'Puppy Helper', cost: 20, income: 0.2, emoji: '🐶' },
+            { id: 'miner2', name: 'Doge Digger', cost: 100, income: 1, emoji: '🐕' },
+            { id: 'miner3', name: 'Gold Panner', cost: 500, income: 5, emoji: '👨‍🔧' },
+            { id: 'miner4', name: 'Robot Miner', cost: 2000, income: 20, emoji: '🤖' },
+            { id: 'miner5', name: 'Mega Drill', cost: 10000, income: 100, emoji: '⛏️' }
+        ];
+
+        // Initialize game state
+        function initGame() {
+            upgrades.forEach(u => {
+                if (!gameState.upgrades[u.id]) {
+                    gameState.upgrades[u.id] = { count: 0 };
+                }
+            });
+            miners.forEach(m => {
+                if (!gameState.miners[m.id]) {
+                    gameState.miners[m.id] = { count: 0 };
+                }
+            });
+        }
+
+        // Format numbers
+        function formatNumber(num) {
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+            return Math.floor(num).toString();
+        }
+
+        // Calculate click power
+        function getClickPower() {
+            let power = 1;
+            upgrades.forEach(u => {
+                power += gameState.upgrades[u.id].count * u.value;
+            });
+            return power;
+        }
+
+        // Calculate income per second
+        function getIncomePerSecond() {
+            let income = 0;
+            miners.forEach(m => {
+                income += gameState.miners[m.id].count * m.income;
+            });
+            return income;
+        }
+
+        // Get upgrade cost
+        function getUpgradeCost(upgrade) {
+            const count = gameState.upgrades[upgrade.id].count;
+            return Math.floor(upgrade.cost * Math.pow(1.15, count));
+        }
+
+        // Get miner cost
+        function getMinerCost(miner) {
+            const count = gameState.miners[miner.id].count;
+            return Math.floor(miner.cost * Math.pow(1.1, count));
+        }
+
+        // Click doge
+        document.getElementById('dogeBtn').addEventListener('click', function() {
+            const gain = getClickPower();
+            gameState.money += gain;
+            gameState.totalMoney += gain;
+            gameState.totalClicks += 1;
+
+            // Floating number animation
+            const rect = this.getBoundingClientRect();
+            const floatingNum = document.createElement('div');
+            floatingNum.className = 'floating-number';
+            floatingNum.textContent = '+' + formatNumber(gain);
+            floatingNum.style.left = (rect.left + rect.width / 2) + 'px';
+            floatingNum.style.top = (rect.top) + 'px';
+            document.body.appendChild(floatingNum);
+
+            setTimeout(() => floatingNum.remove(), 1000);
+
+            updateUI();
+            autoSave();
+        });
+
+        // Buy upgrade
+        function buyUpgrade(upgradeId) {
+            const upgrade = upgrades.find(u => u.id === upgradeId);
+            const cost = getUpgradeCost(upgrade);
+
+            if (gameState.money >= cost) {
+                gameState.money -= cost;
+                gameState.upgrades[upgradeId].count += 1;
+                updateUI();
+                autoSave();
+            }
+        }
+
+        // Buy miner
+        function buyMiner(minerId) {
+            const miner = miners.find(m => m.id === minerId);
+            const cost = getMinerCost(miner);
+
+            if (gameState.money >= cost) {
+                gameState.money -= cost;
+                gameState.miners[minerId].count += 1;
+                updateUI();
+                autoSave();
+            }
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('totalMoney').textContent = formatNumber(gameState.money);
+            document.getElementById('perClick').textContent = formatNumber(getClickPower());
+            document.getElementById('perSecond').textContent = formatNumber(getIncomePerSecond());
+            document.getElementById('clicks').textContent = formatNumber(gameState.totalClicks);
+
+            // Update upgrades
+            const upgradesDiv = document.getElementById('upgrades');
+            upgradesDiv.innerHTML = '';
+            upgrades.forEach(upgrade => {
+                const count = gameState.upgrades[upgrade.id].count;
+                const cost = getUpgradeCost(upgrade);
+                const canBuy = gameState.money >= cost;
+
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${upgrade.name} <span class="level-badge">x${count}</span></div>
+                        <div class="item-details">+${upgrade.value} per click</div>
+                    </div>
+                    <div class="item-cost">${formatNumber(cost)}</div>
+                    <button class="buy-btn" ${canBuy ? '' : 'disabled'} onclick="buyUpgrade('${upgrade.id}')">Buy</button>
+                `;
+                upgradesDiv.appendChild(item);
+            });
+
+            // Update miners
+            const minersDiv = document.getElementById('miners');
+            minersDiv.innerHTML = '';
+            miners.forEach(miner => {
+                const count = gameState.miners[miner.id].count;
+                const cost = getMinerCost(miner);
+                const canBuy = gameState.money >= cost;
+
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${miner.emoji} ${miner.name} <span class="level-badge">x${count}</span></div>
+                        <div class="item-details">+${miner.income}/sec</div>
+                    </div>
+                    <div class="item-cost">${formatNumber(cost)}</div>
+                    <button class="buy-btn" ${canBuy ? '' : 'disabled'} onclick="buyMiner('${miner.id}')">Buy</button>
+                `;
+                minersDiv.appendChild(item);
+            });
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Game loop (passive income)
+        setInterval(() => {
+            const now = Date.now();
+            const deltaTime = (now - gameState.lastTime) / 1000;
+            gameState.lastTime = now;
+
+            const income = getIncomePerSecond();
+            if (income > 0) {
+                gameState.money += income * deltaTime;
+                gameState.totalMoney += income * deltaTime;
+                updateUI();
+            }
+        }, 100);
+
+        // Auto save
+        let autoSaveTimer;
+        function autoSave() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                localStorage.setItem('dogeminer_save', JSON.stringify(gameState));
+            }, 1000);
+        }
+
+        // Save button
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            localStorage.setItem('dogeminer_save', JSON.stringify(gameState));
+            alert('Game saved! 💾');
+        });
+
+        // Load button
+        document.getElementById('loadBtn').addEventListener('click', () => {
+            const saved = localStorage.getItem('dogeminer_save');
+            if (saved) {
+                gameState = JSON.parse(saved);
+                gameState.lastTime = Date.now();
+                updateUI();
+                alert('Game loaded! 📂');
+            } else {
+                alert('No save found!');
+            }
+        });
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Are you sure? This will delete your progress!')) {
+                localStorage.removeItem('dogeminer_save');
+                gameState = {
+                    money: 0,
+                    totalMoney: 0,
+                    clickPower: 1,
+                    totalClicks: 0,
+                    lastTime: Date.now(),
+                    upgrades: {},
+                    miners: {}
+                };
+                initGame();
+                updateUI();
+            }
+        });
+
+        // Initialize
+        initGame();
+        const saved = localStorage.getItem('dogeminer_save');
+        if (saved) {
+            gameState = JSON.parse(saved);
+        }
+        gameState.lastTime = Date.now();
+        updateUI();
+    </script>
 </body>
 </html>
